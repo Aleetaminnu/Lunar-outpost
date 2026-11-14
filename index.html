@@ -1,130 +1,75 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Outpost Zero: Junior Astronaut Mission Trainer</title>
-<style>
-:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark;
---bg:#0b1026;--card:#151c3d;--ink:#eef2ff;--mut:#a5b0d6;--line:#2a3566;--acc:#ffb84d;--ok:#4ade80;--bad:#f87171;--air:#60a5fa;--food:#a3e635;--sh:#c084fc;--pw:#facc15}
-:root:not([data-theme="dark"]){}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){color-scheme:light;--bg:#eef2ff;--card:#fff;--ink:#101636;--mut:#4a5580;--line:#c9d2f0;--acc:#c2410c;--ok:#15803d;--bad:#b91c1c;--air:#1d4ed8;--food:#4d7c0f;--sh:#7e22ce;--pw:#a16207}}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Trebuchet MS",system-ui,sans-serif}
-main{max-width:720px;margin:0 auto;padding:14px}
-h1{margin:0;font-size:1.7rem;letter-spacing:.08em}
-h2{font-size:1.05rem;margin:0 0 8px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
-.mut{color:var(--mut);font-size:.9rem}
-button{font:inherit;cursor:pointer;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:10px 14px;min-height:44px}
-button.go{background:var(--acc);color:#111;border-color:var(--acc);font-weight:700;width:100%;font-size:1.1rem}
-button:disabled{opacity:.4;cursor:not-allowed}
-.row{display:flex;gap:10px;flex-wrap:wrap}.row>*{flex:1 1 200px}
-.bar{height:14px;background:var(--line);border-radius:8px;overflow:hidden}.bar i{display:block;height:100%;transition:width .5s}
-.m{margin:7px 0}.m b{display:flex;justify-content:space-between}
-.pl{display:flex;align-items:center;gap:10px;margin:8px 0}.pl .n{flex:1}.pl .v{min-width:28px;text-align:center;font-weight:700;font-size:1.2rem}
-.pl button{width:44px;padding:0;font-size:1.3rem}
-.pips{letter-spacing:2px;color:var(--pw)}
-.up{color:var(--ok)}.dn{color:var(--bad)}
-.ev{border-color:var(--acc)}
-.tag{display:inline-block;font-size:.75rem;border:1px solid var(--acc);color:var(--acc);border-radius:20px;padding:1px 8px;margin-bottom:6px}
-.fact{border-left:4px solid var(--air);padding-left:10px;margin:8px 0}
-details{margin-top:8px}summary{cursor:pointer}
-</style></head><body><main id="app"></main>
-<script>
-const $=s=>document.querySelector(s),R=n=>Math.floor(Math.random()*n),cl=v=>Math.max(0,Math.min(100,Math.round(v)));
-const DAYS=10,GOAL=130;
-const SITES={
- moon:{n:"The Moon",e:"🌕",bg:8,delay:"about 1.3 seconds each way",d:"Short radio delay, but the surface gets about 1.3 mSv of radiation a day (China’s Chang’e 4 lander measured it). That’s more than twice what Mars gets, so shielding matters a lot!"},
-  mars:{n:"Mars",e:"🔴",bg:5,delay:"4 to 24 minutes each way",d:"About 0.6 mSv a day on the surface (Curiosity’s RAD instrument measured it). But Earth is so far away, a radio reply can take up to 48 minutes round trip. You must decide on your own!"}};
-  const SYS={ls:["💨","Life Support","Makes air and water. Crew breathes it every day.",s=>s*6-10,"air"],
-   gh:["🌱","Greenhouse","Grows food with light and water.",s=>s*6-9,"food"],
-    sh:["🛡️","Radiation Shield","Keeps harmful space radiation out.",s=>s*5-7,"shield"],
-     sci:["🔬","Science Lab","Earns science points for the mission.",s=>s*10,"sci"]};
-     const SPACE=[
-      {t:"☀️ Big solar flare!",src:"NASA DONKI archive: X9.0 flare, 3 Oct 2024, the strongest of this solar cycle.",x:"A flare shoots out fast particles. Astronauts shelter in the most shielded room.",
-        a:["Everyone shelter inside",{sci:-15,shield:-8},"Safe, but lab work stops."],b:["Keep working",{storm:40,sci:20},"Extra science, but the crew takes radiation."]},
-         {t:"🌩️ Geomagnetic storm: radio blackout",src:"NASA DONKI archive: G5 storm, 10–11 May 2024, the strongest in about 20 years.",x:"Solar storms can scramble radio and GPS signals.",
-           a:["Switch on backup radio",{pow:-2},"Keeps contact, but uses 2 power today."],b:["Wait it out",{sci:-12,air:-4},"Saves power, but you can’t get help or data."]},
-            {t:"⚠️ Radiation spike",src:"NASA Curiosity RAD: Sept 2017 solar storm roughly doubled radiation on the Martian surface.",x:"Even with Mars’ thin air, storms can double the dose.",
-              a:["Boost shield now",{shield:15,pow:-1},"Stronger shield, 1 less power today."],b:["Risk it",{storm:30,pow:1},"1 extra power today, but radiation gets through."]}];
-              const SITEEV={moon:[{t:"🌑 Lunar night is falling",src:"Real fact: most of the Moon has about 14 Earth days of darkness at a time.",x:"Solar panels need sunlight. No sun, no power!",
-                a:["Run batteries hard",{pow:-3,shield:5},"Lose 3 power today."],b:["Dim everything",{pow:-1,sci:-15,air:-6},"Lose 1 power, but the air gets stale."]}],
-                 mars:[{t:"🌪️ Dust storm blocks the sun",src:"Real fact: a 2018 global dust storm silenced NASA’s Opportunity rover.",x:"Dust in the sky blocks sunlight from solar panels.",
-                   a:["Sweep the panels",{pow:-2,sci:-10},"Costs crew time and power."],b:["Hunker down",{pow:-3,food:-5},"Lose 3 power and the plants get less light."]}]};
-                   const COMMON=[
-                    {t:"💻 Computer glitch",src:"",x:"Mission control can fix it. But the radio message takes time.",
-                      a:["Ask Earth for help","SITE","Safe fix, but you wait for the reply."],b:["Fix it yourself",{air:-8,food:-5},"Fast, but you might break something."]},
-                       {t:"🌸 The plants are blooming!",src:"",x:"Growing food is one of the hardest parts of a long mission.",
-                         a:["Harvest now",{food:18},"Dinner is sorted."],b:["Study the plants",{sci:20,food:5},"Great science, little food."]},
-                          {t:"🚪 Airlock leak",src:"",x:"A tiny crack can leak air slowly.",
-                            a:["Patch it",{pow:-1,air:-3},"Costs 1 power today."],b:["Ignore it",{air:-16},"Saves power, but air escapes."]}];
-                            let G;
-                            function shuf(a){a=a.slice();for(let i=a.length-1;i;i--){const j=R(i+1);[a[i],a[j]]=[a[j],a[i]]}return a}
-                            function start(site){
-                             const pool=shuf([...SPACE,...SITEEV[site],...COMMON.slice(0,2),COMMON[2]]).slice(0,7);
-                              G={site,day:1,air:70,food:70,shield:70,health:100,sci:0,al:{ls:2,gh:2,sh:1,sci:2},ev:[null,...pool,null,null],pow:0,done:null,log:[],res:null};
-                               G.pow=0;render()}
-                               function budget(){return 7+G.pow}
-                               function used(){return Object.values(G.al).reduce((a,b)=>a+b,0)}
-                               function fx(o){const S=SITES[G.site];let m=[];
-                                if(o==="SITE"){o=G.site==="moon"?{sci:-5}:{sci:-20,food:-3};m.push(G.site==="moon"?"Earth answered in seconds.":"The reply took about 40 minutes, so the lab sat idle!")}
-                                 for(const k in o){const v=o[k];
-                                   if(k==="storm"){const d=Math.round(v*(1-G.shield/100));G.health=cl(G.health-d);m.push(`Radiation hit: −${d} health (your shield blocked ${G.shield}%).`)}
-                                     else if(k==="pow"){G.pow+=v}
-                                       else if(k==="sci"){G.sci=Math.max(0,G.sci+v)}
-                                         else G[k]=cl(G[k]+v)}
-                                          return m.join(" ")}
-                                          function choose(c){const e=G.ev[G.day];G.done=fx(e[c][1])||"Done.";G.done=e[c][2]+" "+G.done;render()}
-                                          function adj(k,d){const n=G.al[k]+d;if(n<0||n>4)return;if(d>0&&used()>=budget())return;G.al[k]=n;render()}
-                                          function run(){
-                                           const S=SITES[G.site],a=G.al,out=[];
-                                            const before={air:G.air,food:G.food,shield:G.shield,health:G.health};
-                                             G.air=cl(G.air+SYS.ls[3](a.ls));G.food=cl(G.food+SYS.gh[3](a.gh));G.shield=cl(G.shield+SYS.sh[3](a.sh));G.sci+=a.sci*10;
-                                              const bg=Math.round(S.bg*(1-G.shield/100)*10)/10;
-                                               let h=-bg;if(G.air<=0)h-=25;else if(G.air<25)h-=4;if(G.food<=0)h-=15;else if(G.food<25)h-=3;
-                                                if(G.air>=40&&G.food>=40)h+=3;
-                                                 G.health=cl(G.health+Math.round(h));
-                                                  if(G.air<=0)out.push("💨 The air ran out!");if(G.food<=0)out.push("🍽️ The food ran out!");
-                                                   out.push(`Everyday radiation cost ${Math.max(0,Math.round(bg))} health. Science +${a.sci*10}.`);
-                                                    G.res={txt:out.join(" "),fact:factFor()};
-                                                     G.pow=0;G.done=null;
-                                                      if(G.health<=0||G.day>=DAYS){G.over=true}else{G.day++;}
-                                                       render()}
-                                                       function factFor(){const a=G.al;
-                                                        if(a.sh===0)return "Real fact: on Earth, our air and magnetic field block most space radiation. Astronauts in deep space have to bring their own shield.";
-                                                         if(a.sci>=3)return "Real fact: every NASA experiment has to share power with life support. Science always waits its turn!";
-                                                          if(a.gh===0)return "Real fact: astronauts on the ISS grew lettuce and chili peppers, but far-away missions will need much more food growing.";
-                                                           return "Real fact: NASA mission planners make this same kind of power budget every day for the ISS and for rovers on Mars.";}
-                                                           const bar=(l,v,c,t,w=v,lab=v)=>`<div class="m"><b><span>${l} <span class="mut" title="${t}">ⓘ</span></span><span>${lab}</span></b><div class="bar"><i style="width:${w}%;background:${w<30&&c!=="var(--acc)"?"var(--bad)":c}"></i></div></div>`;
-                                                           function ending(){const win=G.health>0&&G.sci>=GOAL,ok=G.health>0;
-                                                            const t=win?"🏆 Mission success!":ok?"🌗 Your crew survived, but you missed the science goal":"🆘 Crew rescued: mission ended early";
-                                                             const why=win?"You kept everyone alive and still found time for science. That’s the real job of a mission planner!":
-                                                              ok?"Staying alive isn’t enough. Try giving the lab a little more power on calm days.":
-                                                               G.air<=0?"The air ran out. Life Support always comes first.":G.food<=0?"The food ran out. Plants need steady power too.":"Radiation wore the crew down. Try a stronger shield.";
-                                                                return `<div class="card"><h2>${t}</h2><p>${why}</p><p>Science: <b>${G.sci}</b> / ${GOAL} · Health: <b>${G.health}</b> · Sols survived: <b>${G.day}</b></p>
-                                                                 <p class="mut">Nobody loses forever. Every astronaut team practices on the ground first. Try the other site or a new plan!</p>
-                                                                  <div class="row"><button class="go" onclick="start('${G.site}')">Play again</button><button onclick="G=null;render()">Choose a new site</button></div></div>`}
-                                                                  function render(){const A=$("#app");
-                                                                   if(!G){A.innerHTML=`<h1>🚀 OUTPOST ZERO</h1><p class="mut">Junior Astronaut Mission Trainer</p>
-                                                                    <div class="card"><h2>Your job</h2><p>Run a base for 10 sols (a sol is one day on another world). You get a limited amount of power each sol. Every system you turn up means turning another down.</p>
-                                                                     <p><b>Goal:</b> keep your crew healthy AND collect ${GOAL} science points.</p></div>
-                                                                      <div class="row">${Object.entries(SITES).map(([k,s])=>`<button onclick="start('${k}')"><div style="font-size:2rem">${s.e}</div><b>${s.n}</b><div class="mut">${s.d}</div></button>`).join("")}</div>${src()}`;return}
-                                                                       const S=SITES[G.site],e=G.ev[G.day],pend=e&&!G.done&&!G.over,left=budget()-used();
-                                                                        let h=`<h1>${S.e} OUTPOST ZERO</h1><div class="mut">${S.n} · Sol ${Math.min(G.day,DAYS)} of ${DAYS} · Earth radio delay: ${S.delay}</div>
-                                                                         <div class="card">${bar("🔬 Science",0,"var(--acc)","Collect enough science points to win.",cl(G.sci/GOAL*100),G.sci+" / "+GOAL)}
-                                                                          ${bar("💨 Air",G.air,"var(--air)","Crew breathes this. Made by Life Support.")}${bar("🌱 Food",G.food,"var(--food)","Grown in the greenhouse.")}
-                                                                           ${bar("🛡️ Shield",G.shield,"var(--sh)","Blocks radiation. Slowly wears down unless powered.")}${bar("❤️ Crew health",G.health,"var(--ok)","If it hits 0, the mission ends.")}</div>`;
-                                                                            if(G.res){h+=`<div class="card"><h2>Last sol report</h2><p>${G.res.txt}</p><div class="fact">${G.res.fact}</div></div>`}
-                                                                             if(G.over){A.innerHTML=h+ending()+src();return}
-                                                                              if(e){h+=`<div class="card ev"><span class="tag">EVENT</span><h2>${e.t}</h2><p>${e.x}</p>${e.src?`<p class="mut">📡 ${e.src}</p>`:""}
-                                                                                ${G.done?`<p><b>You chose:</b> ${G.done}</p>`:`<div class="row"><button onclick="choose('a')"><b>${e.a[0]}</b><div class="mut">${e.a[2]}</div></button><button onclick="choose('b')"><b>${e.b[0]}</b><div class="mut">${e.b[2]}</div></button></div>`}</div>`}
-                                                                                 h+=`<div class="card"><h2>⚡ Power plan: <span class="${left<0?"dn":""}">${left} left</span> of ${budget()}</h2><p class="mut">${G.pow<0?"Today’s power is lower than usual because of the event.":G.pow>0?"You have extra power today.":"Spend it all, but not more!"}</p>`;
-                                                                                  for(const k in SYS){const[ic,nm,ds,f,key]=SYS[k],d=f(G.al[k]);
-                                                                                    h+=`<div class="pl"><button onclick="adj('${k}',-1)" aria-label="less ${nm}">−</button><div class="n"><b>${ic} ${nm}</b> <span class="pips">${"●".repeat(G.al[k])}${"○".repeat(4-G.al[k])}</span><div class="mut">${ds} Next sol: <span class="${d>=0?"up":"dn"}">${d>=0?"▲ +":"▼ "}${d}${key==="sci"?" points":" "+key}</span></div></div><span class="v">${G.al[k]}</span><button onclick="adj('${k}',1)" aria-label="more ${nm}">+</button></div>`}
-                                                                                     h+=`<button class="go" onclick="run()" ${pend||left<0?"disabled":""}>${pend?"Handle the event first":left<0?"Use less power":"▶ Run this sol"}</button></div>`;
-                                                                                      A.innerHTML=h+src()}
-                                                                                      function src(){return `<details class="card"><summary>📡 Where does the science come from?</summary>
-                                                                                      <p class="mut">Space weather events are real, picked from NASA’s <b>DONKI</b> (Space Weather Database) archive. This game uses a small saved set, not a live feed. Radiation levels come from <b>Curiosity RAD</b> (Mars) and <b>Chang’e 4 LND</b> (Moon, published with NASA-partner data). Dust storm and lunar night facts come from NASA mission reports. Power, air, and food numbers are simplified for play. A <b>mSv</b> (millisievert) measures radiation dose.</p>
-                                                                                      <p class="mut">Why no free choices? On a real mission, power from sunlight is limited. Planners always trade life support, food, shielding, and science against each other.</p></details>`}
-                                                                                      render();
-                                                                                      </script></body></html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Outpost Zero</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>OUTPOST ZERO</h1>
+    <p>Junior Astronaut Mission Trainer</p>
+    <button id="help">How to play</button>
+  </header>
+
+  <main>
+    <div id="game-wrap">
+      <div id="game-container"></div>
+
+      <section id="mobile-controls">
+        <div class="pad">
+          <button class="move" data-dir="up">&#9650;</button>
+          <div class="pad-row">
+            <button class="move" data-dir="left">&#9664;</button>
+            <button class="move" data-dir="down">&#9660;</button>
+            <button class="move" data-dir="right">&#9654;</button>
+          </div>
+        </div>
+        <button id="interact">INTERACT</button>
+      </section>
+    </div>
+
+    <section id="dashboard">
+      <h2>Mission Control</h2>
+      <p><span id="stage-name">Stage 1</span> &nbsp; Day <span id="day">1 / 5</span> &nbsp; Science <span id="science">0</span></p>
+      <p id="goal"></p>
+
+      <div id="meters">
+      <div class="meter"><label>Power left today <span id="power">10</span></label><div class="bar"><div id="bar-power"></div></div></div>
+      <div class="meter"><label>Air <span id="air">70</span></label><div class="bar"><div id="bar-air"></div></div></div>
+      <div class="meter"><label>Food <span id="food">70</span></label><div class="bar"><div id="bar-food"></div></div></div>
+      <div class="meter"><label>Radiation shield <span id="shield">70</span></label><div class="bar"><div id="bar-shield"></div></div></div>
+      <div class="meter"><label>Crew health <span id="health">100</span></label><div class="bar"><div id="bar-health"></div></div></div>
+      </div>
+
+      <p id="weather">Space weather: checking NASA...</p>
+      <p id="hint"></p>
+      <p id="message">Welcome, astronaut! Power is limited each day. Spend it wisely.</p>
+      <button id="end-day">END DAY</button>
+    </section>
+  </main>
+
+  <div id="overlay" class="hidden">
+    <div id="overlay-box">
+      <h3 id="ov-title"></h3>
+      <p id="ov-text"></p>
+      <p id="ov-source"></p>
+      <div id="ov-buttons"></div>
+    </div>
+  </div>
+
+  <footer>
+    Space weather comes live from NASA's DONKI when it can be reached, with saved archive events as a backup.
+    Radiation numbers: Chang'e 4 lander (Moon). Power, air and food numbers are simplified for the game.
+  </footer>
+
+  <script src="js/resources.js"></script>
+  <script src="js/missions.js"></script>
+  <script src="js/interface.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/world.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
