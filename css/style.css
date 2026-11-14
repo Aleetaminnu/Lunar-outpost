@@ -132,6 +132,11 @@ body {
                                                                                                                                   .diff { display: flex; gap: 6px; margin: 6px 0; }
                                                                                                                                   .diff button { flex: 1; padding: 8px; background: #304b65; text-align: center; }
                                                                                                                                   .diff button.on { background: #36a9a0; outline: 2px solid #fff; }
+                                                                                                                                  .diff-note { font-size: 13px; color: #cfe3f1; margin: 4px 0; }
+                                                                                                                                  .more { margin-top: 8px; font-size: 13px; }
+                                                                                                                                  .more summary { cursor: pointer; color: #ffd77a; }
+                                                                                                                                  .fullhelp { white-space: pre-line; margin-top: 6px; max-height: 35vh; overflow-y: auto; color: #cfe3f1; line-height: 1.5; }
+                                                                                                                                  #end-day.ready { box-shadow: 0 0 0 3px #ffd77a; animation: pulse 1s infinite; }
                                                                                                                                   .badge { margin: 6px 0; font-size: 14px; }
                                                                                                                                   .badge b { color: #ffd77a; }
 

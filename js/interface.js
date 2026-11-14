@@ -34,97 +34,100 @@ function updateDashboard() {
                                                                                           }
                                                                                               lastShown[key] = now;
                                                                                                 });
-                                                                                                }
 
-                                                                                                function message(text) {
-                                                                                                  document.getElementById("message").textContent = text;
-                                                                                                  }
-
-                                                                                                  function hint(text) {
-                                                                                                    document.getElementById("hint").textContent = text;
+                                                                                                  // END DAY glows when there is hardly any power left, a hint that it's time
+                                                                                                    document.getElementById("end-day").className = state.power < 2 ? "ready" : "";
                                                                                                     }
 
-                                                                                                    // big message on top of the game, so you can't miss what just happened
-                                                                                                    let bannerTimer = null;
-                                                                                                    function showBanner(text, good) {
-                                                                                                      if (!good) playSound("fail");
-                                                                                                        const b = document.getElementById("banner");
-                                                                                                          b.textContent = text;
-                                                                                                            b.className = "show" + (good ? "" : " bad");
-                                                                                                              clearTimeout(bannerTimer);
-                                                                                                                bannerTimer = setTimeout(() => { b.className = ""; }, 2600);
-                                                                                                                }
+                                                                                                    function message(text) {
+                                                                                                      document.getElementById("message").textContent = text;
+                                                                                                      }
 
-                                                                                                                function showOverlay(title, text, source, buttons) {
-                                                                                                                  clearControls();
-                                                                                                                    document.getElementById("ov-title").textContent = title;
-                                                                                                                      document.getElementById("ov-text").textContent = text;
-                                                                                                                        document.getElementById("ov-source").textContent = source;
-                                                                                                                          document.getElementById("ov-extra").innerHTML = "";
-                                                                                                                            const box = document.getElementById("ov-buttons");
-                                                                                                                              box.innerHTML = "";
-                                                                                                                                buttons.forEach(b => {
-                                                                                                                                    const btn = document.createElement("button");
-                                                                                                                                        btn.innerHTML = b.label + (b.note ? "<small>" + b.note + "</small>" : "");
-                                                                                                                                            btn.addEventListener("click", b.onClick);
-                                                                                                                                                box.appendChild(btn);
-                                                                                                                                                  });
-                                                                                                                                                    document.getElementById("overlay").classList.remove("hidden");
-                                                                                                                                                    }
+                                                                                                      function hint(text) {
+                                                                                                        document.getElementById("hint").textContent = text;
+                                                                                                        }
 
-                                                                                                                                                    function hideOverlay() {
-                                                                                                                                                      document.getElementById("overlay").classList.add("hidden");
-                                                                                                                                                      }
+                                                                                                        // big message on top of the game, so you can't miss what just happened
+                                                                                                        let bannerTimer = null;
+                                                                                                        function showBanner(text, good) {
+                                                                                                          if (!good) playSound("fail");
+                                                                                                            const b = document.getElementById("banner");
+                                                                                                              b.textContent = text;
+                                                                                                                b.className = "show" + (good ? "" : " bad");
+                                                                                                                  clearTimeout(bannerTimer);
+                                                                                                                    bannerTimer = setTimeout(() => { b.className = ""; }, 2600);
+                                                                                                                    }
 
-                                                                                                                                                      function clearControls() {
-                                                                                                                                                        controls.ax = 0;
-                                                                                                                                                          controls.ay = 0;
-                                                                                                                                                            const knob = document.getElementById("joy-knob");
-                                                                                                                                                              if (knob) knob.style.transform = "translate(0px, 0px)";
-                                                                                                                                                              }
+                                                                                                                    function showOverlay(title, text, source, buttons) {
+                                                                                                                      clearControls();
+                                                                                                                        document.getElementById("ov-title").textContent = title;
+                                                                                                                          document.getElementById("ov-text").textContent = text;
+                                                                                                                            document.getElementById("ov-source").textContent = source;
+                                                                                                                              document.getElementById("ov-extra").innerHTML = "";
+                                                                                                                                const box = document.getElementById("ov-buttons");
+                                                                                                                                  box.innerHTML = "";
+                                                                                                                                    buttons.forEach(b => {
+                                                                                                                                        const btn = document.createElement("button");
+                                                                                                                                            btn.innerHTML = b.label + (b.note ? "<small>" + b.note + "</small>" : "");
+                                                                                                                                                btn.addEventListener("click", b.onClick);
+                                                                                                                                                    box.appendChild(btn);
+                                                                                                                                                      });
+                                                                                                                                                        document.getElementById("overlay").classList.remove("hidden");
+                                                                                                                                                        }
 
-                                                                                                                                                              function setupMobileControls(onInteract) {
-                                                                                                                                                                const joy = document.getElementById("joy");
-                                                                                                                                                                  const radius = 45;   // how far the knob can move
-                                                                                                                                                                    let active = null;   // the finger that is using the joystick
+                                                                                                                                                        function hideOverlay() {
+                                                                                                                                                          document.getElementById("overlay").classList.add("hidden");
+                                                                                                                                                          }
 
-                                                                                                                                                                      function move(e) {
-                                                                                                                                                                          const r = joy.getBoundingClientRect();
-                                                                                                                                                                              let dx = e.clientX - (r.left + r.width / 2);
-                                                                                                                                                                                  let dy = e.clientY - (r.top + r.height / 2);
-                                                                                                                                                                                      const len = Math.hypot(dx, dy);
-                                                                                                                                                                                          if (len > radius) { dx = dx / len * radius; dy = dy / len * radius; }
-                                                                                                                                                                                              document.getElementById("joy-knob").style.transform = "translate(" + dx + "px, " + dy + "px)";
-                                                                                                                                                                                                  // small dead zone in the middle so he doesn't drift
-                                                                                                                                                                                                      controls.ax = Math.abs(dx) < 8 ? 0 : dx / radius;
-                                                                                                                                                                                                          controls.ay = Math.abs(dy) < 8 ? 0 : dy / radius;
-                                                                                                                                                                                                            }
+                                                                                                                                                          function clearControls() {
+                                                                                                                                                            controls.ax = 0;
+                                                                                                                                                              controls.ay = 0;
+                                                                                                                                                                const knob = document.getElementById("joy-knob");
+                                                                                                                                                                  if (knob) knob.style.transform = "translate(0px, 0px)";
+                                                                                                                                                                  }
 
-                                                                                                                                                                                                              joy.addEventListener("pointerdown", e => {
-                                                                                                                                                                                                                  e.preventDefault();
-                                                                                                                                                                                                                      active = e.pointerId;
-                                                                                                                                                                                                                          if (joy.setPointerCapture) joy.setPointerCapture(e.pointerId);
-                                                                                                                                                                                                                              move(e);
-                                                                                                                                                                                                                                });
-                                                                                                                                                                                                                                  joy.addEventListener("pointermove", e => {
-                                                                                                                                                                                                                                      if (e.pointerId === active) { e.preventDefault(); move(e); }
-                                                                                                                                                                                                                                        });
-                                                                                                                                                                                                                                          const release = e => {
-                                                                                                                                                                                                                                              if (e.pointerId !== active) return;
-                                                                                                                                                                                                                                                  active = null;
-                                                                                                                                                                                                                                                      clearControls();
-                                                                                                                                                                                                                                                        };
-                                                                                                                                                                                                                                                          joy.addEventListener("pointerup", release);
-                                                                                                                                                                                                                                                            joy.addEventListener("pointercancel", release);
-                                                                                                                                                                                                                                                              joy.addEventListener("lostpointercapture", release);
-                                                                                                                                                                                                                                                                joy.addEventListener("contextmenu", e => e.preventDefault());
-                                                                                                                                                                                                                                                                  joy.addEventListener("selectstart", e => e.preventDefault());
+                                                                                                                                                                  function setupMobileControls(onInteract) {
+                                                                                                                                                                    const joy = document.getElementById("joy");
+                                                                                                                                                                      const radius = 45;   // how far the knob can move
+                                                                                                                                                                        let active = null;   // the finger that is using the joystick
 
-                                                                                                                                                                                                                                                                    // safety net: if anything ends the touch, stop moving
-                                                                                                                                                                                                                                                                      ["touchend", "touchcancel", "blur", "contextmenu"].forEach(ev => {
-                                                                                                                                                                                                                                                                          window.addEventListener(ev, () => { active = null; clearControls(); });
-                                                                                                                                                                                                                                                                            });
-                                                                                                                                                                                                                                                                              document.addEventListener("visibilitychange", () => { active = null; clearControls(); });
+                                                                                                                                                                          function move(e) {
+                                                                                                                                                                              const r = joy.getBoundingClientRect();
+                                                                                                                                                                                  let dx = e.clientX - (r.left + r.width / 2);
+                                                                                                                                                                                      let dy = e.clientY - (r.top + r.height / 2);
+                                                                                                                                                                                          const len = Math.hypot(dx, dy);
+                                                                                                                                                                                              if (len > radius) { dx = dx / len * radius; dy = dy / len * radius; }
+                                                                                                                                                                                                  document.getElementById("joy-knob").style.transform = "translate(" + dx + "px, " + dy + "px)";
+                                                                                                                                                                                                      // small dead zone in the middle so he doesn't drift
+                                                                                                                                                                                                          controls.ax = Math.abs(dx) < 8 ? 0 : dx / radius;
+                                                                                                                                                                                                              controls.ay = Math.abs(dy) < 8 ? 0 : dy / radius;
+                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                                document.getElementById("interact").addEventListener("click", onInteract);
-                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                  joy.addEventListener("pointerdown", e => {
+                                                                                                                                                                                                                      e.preventDefault();
+                                                                                                                                                                                                                          active = e.pointerId;
+                                                                                                                                                                                                                              if (joy.setPointerCapture) joy.setPointerCapture(e.pointerId);
+                                                                                                                                                                                                                                  move(e);
+                                                                                                                                                                                                                                    });
+                                                                                                                                                                                                                                      joy.addEventListener("pointermove", e => {
+                                                                                                                                                                                                                                          if (e.pointerId === active) { e.preventDefault(); move(e); }
+                                                                                                                                                                                                                                            });
+                                                                                                                                                                                                                                              const release = e => {
+                                                                                                                                                                                                                                                  if (e.pointerId !== active) return;
+                                                                                                                                                                                                                                                      active = null;
+                                                                                                                                                                                                                                                          clearControls();
+                                                                                                                                                                                                                                                            };
+                                                                                                                                                                                                                                                              joy.addEventListener("pointerup", release);
+                                                                                                                                                                                                                                                                joy.addEventListener("pointercancel", release);
+                                                                                                                                                                                                                                                                  joy.addEventListener("lostpointercapture", release);
+                                                                                                                                                                                                                                                                    joy.addEventListener("contextmenu", e => e.preventDefault());
+                                                                                                                                                                                                                                                                      joy.addEventListener("selectstart", e => e.preventDefault());
+
+                                                                                                                                                                                                                                                                        // safety net: if anything ends the touch, stop moving
+                                                                                                                                                                                                                                                                          ["touchend", "touchcancel", "blur", "contextmenu"].forEach(ev => {
+                                                                                                                                                                                                                                                                              window.addEventListener(ev, () => { active = null; clearControls(); });
+                                                                                                                                                                                                                                                                                });
+                                                                                                                                                                                                                                                                                  document.addEventListener("visibilitychange", () => { active = null; clearControls(); });
+
+                                                                                                                                                                                                                                                                                    document.getElementById("interact").addEventListener("click", onInteract);
+                                                                                                                                                                                                                                                                                    }
