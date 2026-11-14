@@ -11,7 +11,8 @@ body {
           header { background: #172b43; padding: 10px; }
           header h1 { margin: 4px; letter-spacing: 4px; }
           header p { margin: 4px; color: #9bbbd3; }
-          #help { padding: 6px 12px; margin-top: 4px; background: #c17a59; font-size: 13px; }
+          .hbtns { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
+          #help, #sound-btn, #text-btn { padding: 6px 10px; margin-top: 4px; background: #c17a59; font-size: 13px; }
 
           main {
             display: flex;
@@ -107,7 +108,7 @@ body {
                                                                                                                   @keyframes pulse { 50% { box-shadow: 0 0 0 9px rgba(255, 215, 122, 0.25); } }
 
                                                                                                                   #banner {
-                                                                                                                    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+                                                                                                                    position: absolute; top: 58px; left: 50%; transform: translateX(-50%);
                                                                                                                       max-width: 92%; padding: 8px 14px; z-index: 5;
                                                                                                                         background: rgba(16, 24, 39, 0.94); border: 2px solid #4ade80; border-radius: 8px;
                                                                                                                           font-weight: bold; font-size: 16px; text-align: center;
@@ -116,64 +117,87 @@ body {
                                                                                                                             #banner.show { opacity: 1; }
                                                                                                                             #banner.bad { border-color: #f87171; }
 
-                                                                                                                            .meter em { font-style: normal; font-weight: bold; margin-left: 5px; }
-                                                                                                                            .meter em.up { color: #4ade80; }
-                                                                                                                            .meter em.down { color: #f87171; }
+                                                                                                                            #map-btn {
+                                                                                                                              position: absolute; top: 8px; right: 8px; z-index: 6;
+                                                                                                                                width: 44px; height: 44px; padding: 0;
+                                                                                                                                  background: rgba(16, 24, 39, 0.85); border: 2px solid #9bbbd3;
+                                                                                                                                  }
 
-                                                                                                                            footer { padding: 14px; color: #9bbbd3; font-size: 12px; max-width: 800px; margin: auto; }
+                                                                                                                                  #ov-extra { margin: 8px 0; }
+                                                                                                                                  #ov-extra svg { width: 100%; display: block; border-radius: 8px; }
+                                                                                                                                  .legend-row { font-size: 13px; margin: 4px 0; }
+                                                                                                                                  .legend-row b { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: #ffd77a; color: #101827; margin-right: 6px; }
+                                                                                                                                  .legend-row.locked { color: #8a96b8; }
 
-                                                                                                                            #overlay {
-                                                                                                                              position: fixed; inset: 0;
-                                                                                                                                background: rgba(0, 0, 0, 0.7);
-                                                                                                                                  display: flex; align-items: center; justify-content: center;
-                                                                                                                                    z-index: 10;
-                                                                                                                                    }
-                                                                                                                                    #overlay.hidden { display: none; }
-                                                                                                                                    #overlay-box {
-                                                                                                                                      background: #20344c; border: 2px solid #f3c76a; border-radius: 8px;
-                                                                                                                                        padding: 18px; max-width: 460px; width: 90%; text-align: left;
-                                                                                                                                        }
-                                                                                                                                        #ov-text { white-space: pre-line; line-height: 1.5; }
-                                                                                                                                        #ov-source { color: #9bbbd3; font-size: 12px; }
-                                                                                                                                        #ov-buttons button { display: block; width: 100%; margin-top: 8px; text-align: left; }
-                                                                                                                                        #ov-buttons small { display: block; font-weight: normal; color: #dbe7f0; }
+                                                                                                                                  .diff { display: flex; gap: 6px; margin: 6px 0; }
+                                                                                                                                  .diff button { flex: 1; padding: 8px; background: #304b65; text-align: center; }
+                                                                                                                                  .diff button.on { background: #36a9a0; outline: 2px solid #fff; }
+                                                                                                                                  .badge { margin: 6px 0; font-size: 14px; }
+                                                                                                                                  .badge b { color: #ffd77a; }
 
-                                                                                                                                        @media (max-width: 900px) {
-                                                                                                                                          html, body { height: 100%; overflow: hidden; }
-                                                                                                                                            body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+                                                                                                                                  body.big-text .meter, body.big-text #message, body.big-text #hint, body.big-text #goal,
+                                                                                                                                  body.big-text #weather, body.big-text #ov-text, body.big-text #overlay-box button,
+                                                                                                                                  body.big-text .legend-row, body.big-text .badge { font-size: 17px !important; }
 
-                                                                                                                                              header { display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; }
-                                                                                                                                                header h1 { font-size: 16px; margin: 0; letter-spacing: 2px; }
-                                                                                                                                                  header p { display: none; }
-                                                                                                                                                    #help { margin: 0; }
-                                                                                                                                                      footer { display: none; }
+                                                                                                                                  .meter em { font-style: normal; font-weight: bold; margin-left: 5px; }
+                                                                                                                                  .meter em.up { color: #4ade80; }
+                                                                                                                                  .meter em.down { color: #f87171; }
 
-                                                                                                                                                        /* game on top, mission control underneath, all in one screen */
-                                                                                                                                                          main { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
-                                                                                                                                                            #game-wrap { flex: 1; min-height: 0; width: 100%; max-width: none; }
-                                                                                                                                                              #game-container { height: 100%; border: none; border-radius: 0; }
-                                                                                                                                                                #mobile-controls { display: flex; }
+                                                                                                                                  footer { padding: 14px; color: #9bbbd3; font-size: 12px; max-width: 800px; margin: auto; }
 
-                                                                                                                                                                  #dashboard { width: 100%; padding: 6px 10px 8px; border-radius: 0; max-height: 46vh; max-height: 46dvh; overflow-y: auto; }
-                                                                                                                                                                    #dashboard h2 { font-size: 15px; margin: 0 0 2px; }
-                                                                                                                                                                      #dashboard p { margin: 2px 0; font-size: 13px; }
-                                                                                                                                                                        #meters { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
-                                                                                                                                                                          .meter { margin: 3px 0; font-size: 12px; }
-                                                                                                                                                                            .bar { height: 8px; }
-                                                                                                                                                                              #goal { font-size: 12px; margin: 2px 0 4px; }
-                                                                                                                                                                                #weather { font-size: 11px; margin: 2px 0; }
-                                                                                                                                                                                  #hint { font-size: 12px; min-height: 0; margin: 4px 0 2px; padding: 4px 6px; }
-                                                                                                                                                                                    #message { font-size: 12px; line-height: 1.35; min-height: 32px; margin: 2px 0 6px; }
-                                                                                                                                                                                      #end-day { padding: 9px; }
-                                                                                                                                                                                        #joy { width: 104px; height: 104px; }
-                                                                                                                                                                                          #interact { width: 96px; height: 62px; font-size: 12px; }
-                                                                                                                                                                                            #banner { font-size: 14px; top: 6px; }
-                                                                                                                                                                                              #overlay-box { max-height: 85vh; overflow-y: auto; }
-                                                                                                                                                                                              }
+                                                                                                                                  #overlay {
+                                                                                                                                    position: fixed; inset: 0;
+                                                                                                                                      background: rgba(0, 0, 0, 0.7);
+                                                                                                                                        display: flex; align-items: center; justify-content: center;
+                                                                                                                                          z-index: 10;
+                                                                                                                                          }
+                                                                                                                                          #overlay.hidden { display: none; }
+                                                                                                                                          #overlay-box {
+                                                                                                                                            background: #20344c; border: 2px solid #f3c76a; border-radius: 8px;
+                                                                                                                                              padding: 18px; max-width: 460px; width: 90%; text-align: left;
+                                                                                                                                              }
+                                                                                                                                              #ov-text { white-space: pre-line; line-height: 1.5; }
+                                                                                                                                              #ov-source { color: #9bbbd3; font-size: 12px; }
+                                                                                                                                              #ov-buttons button { display: block; width: 100%; margin-top: 8px; text-align: left; }
+                                                                                                                                              #ov-buttons small { display: block; font-weight: normal; color: #dbe7f0; }
 
-                                                                                                                                                                                              /* phone held sideways: game on the left, mission control on the right */
-                                                                                                                                                                                              @media (max-width: 900px) and (orientation: landscape) {
-                                                                                                                                                                                                main { flex-direction: row; }
-                                                                                                                                                                                                  #dashboard { width: 260px; max-height: none; height: 100%; flex: none; }
-                                                                                                                                                                                                    #meters { grid-template-columns: 1fr; }
-                                                                                                                                                                                                    }
+                                                                                                                                              @media (max-width: 900px) {
+                                                                                                                                                html, body { height: 100%; overflow: hidden; }
+                                                                                                                                                  body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+
+                                                                                                                                                    header { display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; }
+                                                                                                                                                      header h1 { font-size: 16px; margin: 0; letter-spacing: 2px; }
+                                                                                                                                                        header p { display: none; }
+                                                                                                                                                          .hbtns { gap: 4px; }
+                                                                                                                                                            #help, #sound-btn, #text-btn { margin: 0; padding: 4px 6px; font-size: 11px; }
+                                                                                                                                                              footer { display: none; }
+
+                                                                                                                                                                /* game on top, mission control underneath, all in one screen */
+                                                                                                                                                                  main { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
+                                                                                                                                                                    #game-wrap { flex: 1; min-height: 0; width: 100%; max-width: none; }
+                                                                                                                                                                      #game-container { height: 100%; border: none; border-radius: 0; }
+                                                                                                                                                                        #mobile-controls { display: flex; }
+
+                                                                                                                                                                          #dashboard { width: 100%; padding: 6px 10px 8px; border-radius: 0; max-height: 46vh; max-height: 46dvh; overflow-y: auto; }
+                                                                                                                                                                            #dashboard h2 { font-size: 15px; margin: 0 0 2px; }
+                                                                                                                                                                              #dashboard p { margin: 2px 0; font-size: 13px; }
+                                                                                                                                                                                #meters { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+                                                                                                                                                                                  .meter { margin: 3px 0; font-size: 12px; }
+                                                                                                                                                                                    .bar { height: 8px; }
+                                                                                                                                                                                      #goal { font-size: 12px; margin: 2px 0 4px; }
+                                                                                                                                                                                        #weather { font-size: 11px; margin: 2px 0; }
+                                                                                                                                                                                          #hint { font-size: 12px; min-height: 0; margin: 4px 0 2px; padding: 4px 6px; }
+                                                                                                                                                                                            #message { font-size: 12px; line-height: 1.35; min-height: 32px; margin: 2px 0 6px; }
+                                                                                                                                                                                              #end-day { padding: 9px; }
+                                                                                                                                                                                                #joy { width: 104px; height: 104px; }
+                                                                                                                                                                                                  #interact { width: 96px; height: 62px; font-size: 12px; }
+                                                                                                                                                                                                    #banner { font-size: 14px; top: 54px; }
+                                                                                                                                                                                                      #overlay-box { max-height: 85vh; overflow-y: auto; }
+                                                                                                                                                                                                      }
+
+                                                                                                                                                                                                      /* phone held sideways: game on the left, mission control on the right */
+                                                                                                                                                                                                      @media (max-width: 900px) and (orientation: landscape) {
+                                                                                                                                                                                                        main { flex-direction: row; }
+                                                                                                                                                                                                          #dashboard { width: 260px; max-height: none; height: 100%; flex: none; }
+                                                                                                                                                                                                            #meters { grid-template-columns: 1fr; }
+                                                                                                                                                                                                            }
