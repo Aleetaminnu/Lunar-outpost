@@ -22,7 +22,7 @@ You run a lunar outpost, then a Martian one, with only a little power each day. 
 
 ## NASA data and facts used
 See `docs/SOURCES.md` for each source and what we used it for.
-- DONKI (Space Weather Database): the game asks for solar flares from the last 7 days. Active space weather makes storms and daily radiation stronger. If the live feed can't be reached the game uses saved archive events and says so on screen.
+- DONKI (Space Weather Database): the game asks for solar flares from the last 7 days (at most once every 30 minutes per browser). Active space weather makes storms and daily radiation stronger. If the live feed can't be reached the game uses saved archive events and says so on screen.
 - Radiation levels: Chang'e 4 lander (Moon) and Curiosity RAD (Mars).
 - Power, air, food and shield numbers are simplified for gameplay.
 
@@ -44,7 +44,7 @@ See `docs/SOURCES.md` for each source and what we used it for.
 6. Integration and testing
 
 ## AI use
-Parts of the planning and code were written with AI assistance (ChatGPT and Claude). The team reviewed, tested and edited the code. Add your own note here about what each member did.
+Parts of the planning and code were written with AI assistance (ChatGPT and Claude). The team reviewed, tested and edited the code.
 
 ## License
 MIT
