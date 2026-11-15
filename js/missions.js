@@ -265,4 +265,4 @@ function missionReportHtml() {
     h += '<div class="badge"><b>' + b.name + '</b>' + (before.indexOf(b.id) < 0 ? ' (NEW)' : '') + ': ' + b.text + '</div>';
   });
   return h;
-}c
+}
