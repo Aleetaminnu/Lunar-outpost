@@ -77,4 +77,3 @@ const BUILDINGS = [
                                                                                                                                                                       message(b.job + " (-" + b.cost + " power). " + FACTS[b.name]);
                                                                                                                                                                         updateDashboard();
                                                                                                                                                                         }
-]
