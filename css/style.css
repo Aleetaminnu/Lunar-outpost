@@ -8,11 +8,12 @@ body {
           text-align: center;
           }
 
-          header { background: #172b43; padding: 10px; }
-          header h1 { margin: 4px; letter-spacing: 4px; }
-          header p { margin: 4px; color: #9bbbd3; }
-          .hbtns { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; }
-          #help, #sound-btn, #text-btn { padding: 6px 10px; margin-top: 4px; background: #c17a59; font-size: 13px; }
+          header { background: #172b43; padding: 8px 10px; }
+          header h1 { margin: 4px 0; line-height: 0; }
+          #logo { height: 54px; max-width: 90%; }
+          header p { color: #9bbbd3; margin: 4px; font-size: 14px; }
+          .hbtns { display: flex; gap: 6px; justify-content: center; }
+          #help, #sound-btn { padding: 6px 12px; font-size: 13px; background: #c17a59; }
 
           main {
             display: flex;
@@ -22,61 +23,58 @@ body {
                     padding: 14px;
                     }
 
-                    #game-wrap {
-                      position: relative;
-                        width: 960px;
-                          max-width: 100%;
-                          }
+                    #game-wrap { position: relative; width: 960px; max-width: 100%; }
+                    #game-container {
+                      width: 100%;
+                        border: 3px solid #557c96;
+                          border-radius: 8px;
+                            overflow: hidden;
+                            }
+                            #game-container canvas { display: block; max-width: 100%; touch-action: none; }
 
-                          #game-container {
-                            width: 100%;
-                              border: 3px solid #557c96;
-                                border-radius: 8px;
-                                  overflow: hidden;
-                                  }
-                                  #game-container canvas { display: block; max-width: 100%; touch-action: none; }
+                            #dashboard {
+                              width: 270px;
+                                padding: 14px;
+                                  text-align: left;
+                                    background: #20344c;
+                                      border-radius: 8px;
+                                      }
+                                      #dashboard h2 { margin-top: 0; color: #72d6e9; font-size: 19px; }
 
-                                  #dashboard {
-                                    width: 270px;
-                                      padding: 14px;
-                                        text-align: left;
-                                          background: #20344c;
-                                            border-radius: 8px;
-                                            }
-                                            #dashboard h2 { margin-top: 0; color: #72d6e9; font-size: 19px; }
+                                      .meter { margin: 9px 0; font-size: 14px; }
+                                      .meter label { display: flex; justify-content: space-between; margin-bottom: 3px; }
+                                      .bar { height: 12px; background: #3a4f66; border-radius: 6px; overflow: hidden; }
+                                      .bar div { height: 100%; width: 50%; background: #36a9a0; }
+                                      .bar div.low { background: #d9534f; }
 
-                                            .meter { margin: 9px 0; font-size: 14px; }
-                                            .meter label { display: flex; justify-content: space-between; margin-bottom: 3px; }
-                                            .bar { height: 12px; background: #3a4f66; border-radius: 6px; overflow: hidden; }
-                                            .bar div { height: 100%; width: 50%; background: #36a9a0; }
-                                            .bar div.low { background: #d9534f; }
+                                      #hint {
+                                        background: #3a3320;
+                                          border: 1px solid #f3c76a;
+                                            border-radius: 6px;
+                                              padding: 6px 8px;
+                                                color: #ffd77a;
+                                                  font-size: 14px;
+                                                    font-weight: bold;
+                                                      min-height: 34px;
+                                                      }
+                                                      #message { font-size: 13px; line-height: 1.5; min-height: 70px; }
 
-                                            #goal { color: #cfe3f1; font-size: 13px; font-style: italic; margin: 2px 0 8px; }
-                                            #hint {
-                                              background: #3a3320; border: 1px solid #f3c76a; border-radius: 6px;
-                                                padding: 6px 8px; color: #ffd77a; font-size: 14px; font-weight: bold; min-height: 34px;
-                                                }
-                                                #message { font-size: 13px; line-height: 1.5; min-height: 70px; }
+                                                      button {
+                                                        -webkit-user-select: none;
+                                                          user-select: none;
+                                                            -webkit-touch-callout: none;
+                                                              -webkit-tap-highlight-color: transparent;
+                                                                padding: 12px;
+                                                                  border: none;
+                                                                    border-radius: 6px;
+                                                                      background: #36a9a0;
+                                                                        color: #fff;
+                                                                          font-weight: bold;
+                                                                            cursor: pointer;
+                                                                            }
+                                                                            #end-day { width: 100%; }
 
-                                                button {
-                                                  -webkit-user-select: none;
-                                                    user-select: none;
-                                                      -webkit-touch-callout: none;
-                                                        -webkit-tap-highlight-color: transparent;
-                                                          padding: 12px;
-                                                            border: none;
-                                                              border-radius: 6px;
-                                                                background: #36a9a0;
-                                                                  color: #fff;
-                                                                    font-weight: bold;
-                                                                      cursor: pointer;
-                                                                      }
-                                                                      #end-day { width: 100%; }
-
-                                                                      #mobile-controls {
-                                                                        -webkit-user-select: none;
-                                                                          user-select: none;
-                                                                            touch-action: none;
+                                                                            #mobile-controls {
                                                                               position: absolute;
                                                                                 left: 0; right: 0; bottom: 8px;
                                                                                   display: none;
@@ -84,184 +82,83 @@ body {
                                                                                       align-items: flex-end;
                                                                                         padding: 0 12px;
                                                                                           pointer-events: none;
-                                                                                          }
-                                                                                          #mobile-controls button { pointer-events: auto; opacity: 0.7; }
-                                                                                          #joy {
-                                                                                            position: relative;
-                                                                                              width: 120px; height: 120px;
-                                                                                                border-radius: 50%;
-                                                                                                  background: rgba(255, 255, 255, 0.12);
-                                                                                                    border: 2px solid rgba(255, 255, 255, 0.5);
-                                                                                                      pointer-events: auto;
-                                                                                                        touch-action: none;
-                                                                                                        }
-                                                                                                        #joy-knob {
-                                                                                                          position: absolute; left: 50%; top: 50%;
-                                                                                                            width: 52px; height: 52px; margin: -26px 0 0 -26px;
-                                                                                                              border-radius: 50%;
-                                                                                                                background: rgba(255, 255, 255, 0.55);
-                                                                                                                  pointer-events: none;
-                                                                                                                  }
-                                                                                                                  #interact { width: 112px; height: 72px; background: #c17a59; font-size: 13px; line-height: 1.25; opacity: 0.7; }
-                                                                                                                  #interact.ready { opacity: 1; box-shadow: 0 0 0 3px #ffd77a; animation: pulse 1s infinite; }
-                                                                                                                  @keyframes pulse { 50% { box-shadow: 0 0 0 9px rgba(255, 215, 122, 0.25); } }
+                                                                                            user-select: none;
+                                                                                              touch-action: none;
+                                                                                              }
+                                                                                              #mobile-controls button { pointer-events: auto; opacity: 0.7; }
+                                                                                              .pad { display: flex; flex-direction: column; align-items: center; }
+                                                                                              .pad-row { display: flex; gap: 5px; }
+                                                                                              .move { width: 54px; height: 54px; font-size: 18px; touch-action: none; }
+                                                                                              #interact { width: 100px; height: 64px; background: #c17a59; font-size: 13px; }
 
-                                                                                                                  #banner {
-                                                                                                                    position: absolute; top: 58px; left: 50%; transform: translateX(-50%);
-                                                                                                                      max-width: 92%; padding: 8px 14px; z-index: 5;
-                                                                                                                        background: rgba(16, 24, 39, 0.94); border: 2px solid #4ade80; border-radius: 8px;
-                                                                                                                          font-weight: bold; font-size: 16px; text-align: center;
-                                                                                                                            opacity: 0; pointer-events: none; transition: opacity 0.25s;
-                                                                                                                            }
-                                                                                                                            #banner.show { opacity: 1; }
-                                                                                                                            #banner.bad { border-color: #f87171; }
+                                                                                              footer { padding: 14px; color: #9bbbd3; font-size: 12px; max-width: 800px; margin: auto; }
 
-                                                                                                                            #map-btn {
-                                                                                                                              position: absolute; top: 8px; right: 8px; z-index: 6;
-                                                                                                                                width: 44px; height: 44px; padding: 0;
-                                                                                                                                  background: rgba(16, 24, 39, 0.85); border: 2px solid #9bbbd3;
-                                                                                                                                  }
+                                                                                              #overlay {
+                                                                                                position: fixed;
+                                                                                                  inset: 0;
+                                                                                                    background: rgba(0, 0, 0, 0.7);
+                                                                                                      display: flex;
+                                                                                                        align-items: center;
+                                                                                                          justify-content: center;
+                                                                                                            padding: 10px;
+                                                                                                              z-index: 10;
+                                                                                                              }
+                                                                                                              #overlay.hidden { display: none; }
+                                                                                                              #overlay-box {
+                                                                                                                display: flex;
+                                                                                                                  flex-direction: column;
+                                                                                                                    width: 100%;
+                                                                                                                      max-width: 460px;
+                                                                                                                        max-height: 90vh;
+                                                                                                                          max-height: 90dvh;
+                                                                                                                            padding: 14px;
+                                                                                                                              background: #20344c;
+                                                                                                                                border: 2px solid #f3c76a;
+                                                                                                                                  border-radius: 8px;
+                                                                                                                                    text-align: left;
+                                                                                                                                    }
+                                                                                                                                    #ov-logo { height: 44px; align-self: center; margin-bottom: 4px; }
+                                                                                                                                    #ov-logo[hidden] { display: none; }
+                                                                                                                                    #overlay-box h3 { margin: 4px 0 6px; }
+                                                                                                                                    #ov-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+                                                                                                                                    #ov-text { margin: 0 0 6px; white-space: pre-line; line-height: 1.5; }
+                                                                                                                                    #ov-source { margin: 0; color: #9bbbd3; font-size: 12px; }
+                                                                                                                                    #ov-buttons { flex: none; padding-top: 8px; }
+                                                                                                                                    #ov-buttons button { display: block; width: 100%; margin-top: 8px; text-align: left; }
+                                                                                                                                    #ov-buttons small { display: block; font-weight: normal; color: #dbe7f0; }
 
-                                                                                                                                  #ov-extra { margin: 8px 0; }
-                                                                                                                                  #ov-extra svg { width: 100%; display: block; border-radius: 8px; }
-                                                                                                                                  .legend-row { font-size: 13px; margin: 4px 0; }
-                                                                                                                                  .legend-row b { display: inline-block; width: 22px; height: 22px; line-height: 22px; text-align: center; border-radius: 50%; background: #ffd77a; color: #101827; margin-right: 6px; }
-                                                                                                                                  .legend-row.locked { color: #8a96b8; }
+                                                                                                                                    @media (max-width: 900px) {
+                                                                                                                                      html, body { height: 100%; overflow: hidden; }
+                                                                                                                                        body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
 
-                                                                                                                                  .diff { display: flex; gap: 6px; margin: 6px 0; }
-                                                                                                                                  .diff button { flex: 1; padding: 8px; background: #304b65; text-align: center; }
-                                                                                                                                  .diff button.on { background: #36a9a0; outline: 2px solid #fff; }
-                                                                                                                                  .diff-note { font-size: 13px; color: #cfe3f1; margin: 4px 0; }
-                                                                                                                                  .more { margin-top: 8px; font-size: 13px; }
-                                                                                                                                  .more summary { cursor: pointer; color: #ffd77a; }
-                                                                                                                                  .fullhelp { white-space: pre-line; margin-top: 6px; max-height: 35vh; overflow-y: auto; color: #cfe3f1; line-height: 1.5; }
-                                                                                                                                  #end-day.ready { box-shadow: 0 0 0 3px #ffd77a; animation: pulse 1s infinite; }
-                                                                                                                                  .badge { margin: 6px 0; font-size: 14px; }
-                                                                                                                                  .badge b { color: #ffd77a; }
+                                                                                                                                          header { display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; }
+                                                                                                                                            header h1 { margin: 0; }
+                                                                                                                                              #logo { height: 28px; }
+                                                                                                                                                header p { display: none; }
+                                                                                                                                                  .hbtns { gap: 4px; }
+                                                                                                                                                    #help, #sound-btn { padding: 4px 8px; font-size: 11px; }
+                                                                                                                                                      footer { display: none; }
 
-                                                                                                                                  body.big-text .meter, body.big-text #message, body.big-text #hint, body.big-text #goal,
-                                                                                                                                  body.big-text #ov-text, body.big-text #overlay-box button,
-                                                                                                                                  body.big-text .legend-row, body.big-text .badge { font-size: 17px !important; }
+                                                                                                                                                        main { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
+                                                                                                                                                          #game-wrap { flex: 1; min-height: 0; width: 100%; max-width: none; }
+                                                                                                                                                            #game-container { height: 100%; border: none; border-radius: 0; }
+                                                                                                                                                              #mobile-controls { display: flex; }
+                                                                                                                                                                .move { width: 46px; height: 46px; font-size: 16px; }
+                                                                                                                                                                  #interact { width: 90px; height: 56px; font-size: 12px; }
 
-                                                                                                                                  .meter em { font-style: normal; font-weight: bold; margin-left: 5px; }
-                                                                                                                                  .meter em.up { color: #4ade80; }
-                                                                                                                                  .meter em.down { color: #f87171; }
+                                                                                                                                                                    #dashboard { width: 100%; padding: 6px 10px 8px; border-radius: 0; max-height: 46vh; max-height: 46dvh; overflow-y: auto; }
+                                                                                                                                                                      #dashboard h2 { font-size: 15px; margin: 0 0 2px; }
+                                                                                                                                                                        #dashboard p { margin: 2px 0; font-size: 13px; }
+                                                                                                                                                                          #meters { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+                                                                                                                                                                            .meter { margin: 3px 0; font-size: 12px; }
+                                                                                                                                                                              .bar { height: 8px; }
+                                                                                                                                                                                #hint { font-size: 12px; min-height: 0; margin: 4px 0 2px; padding: 4px 6px; }
+                                                                                                                                                                                  #message { font-size: 12px; line-height: 1.35; min-height: 32px; margin: 2px 0 6px; }
+                                                                                                                                                                                    #end-day { padding: 9px; }
+                                                                                                                                                                                    }
 
-                                                                                                                                  footer { padding: 14px; color: #9bbbd3; font-size: 12px; max-width: 800px; margin: auto; }
-
-                                                                                                                                  #overlay {
-                                                                                                                                    position: fixed; inset: 0;
-                                                                                                                                      background: rgba(0, 0, 0, 0.7);
-                                                                                                                                        display: flex; align-items: center; justify-content: center;
-                                                                                                                                          z-index: 40;
-                                                                                                                                          }
-                                                                                                                                          #overlay.hidden { display: none; }
-                                                                                                                                          #overlay-box {
-                                                                                                                                            background: #20344c; border: 2px solid #f3c76a; border-radius: 8px;
-                                                                                                                                              padding: 18px; max-width: 460px; width: 90%; text-align: left;
-                                                                                                                                              }
-                                                                                                                                              #ov-text { white-space: pre-line; line-height: 1.5; }
-                                                                                                                                              #ov-source { color: #9bbbd3; font-size: 12px; }
-                                                                                                                                              #ov-buttons button { display: block; width: 100%; margin-top: 8px; text-align: left; }
-                                                                                                                                              #ov-buttons small { display: block; font-weight: normal; color: #dbe7f0; }
-
-                                                                                                                                              @media (max-width: 900px) {
-                                                                                                                                                html, body { height: 100%; overflow: hidden; }
-                                                                                                                                                  body { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
-
-                                                                                                                                                    header { display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; }
-                                                                                                                                                      header h1 { font-size: 16px; margin: 0; letter-spacing: 2px; }
-                                                                                                                                                        header p { display: none; }
-                                                                                                                                                          .hbtns { gap: 4px; }
-                                                                                                                                                            #help, #sound-btn, #text-btn { margin: 0; padding: 4px 6px; font-size: 11px; }
-                                                                                                                                                              footer { display: none; }
-
-                                                                                                                                                                
-                                                                                                                                                                  main { flex: 1; min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
-                                                                                                                                                                    #game-wrap { flex: 1; min-height: 0; width: 100%; max-width: none; }
-                                                                                                                                                                      #game-container { height: 100%; border: none; border-radius: 0; }
-                                                                                                                                                                        #mobile-controls { display: flex; }
-
-                                                                                                                                                                          #dashboard { width: 100%; padding: 6px 10px 8px; border-radius: 0; max-height: 46vh; max-height: 46dvh; overflow-y: auto; }
-                                                                                                                                                                            #dashboard h2 { font-size: 15px; margin: 0 0 2px; }
-                                                                                                                                                                              #dashboard p { margin: 2px 0; font-size: 13px; }
-                                                                                                                                                                                #meters { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
-                                                                                                                                                                                  .meter { margin: 3px 0; font-size: 12px; }
-                                                                                                                                                                                    .bar { height: 8px; }
-                                                                                                                                                                                      #goal { font-size: 12px; margin: 2px 0 4px; }
-                                                                                                                                                                                          #hint { font-size: 12px; min-height: 0; margin: 4px 0 2px; padding: 4px 6px; }
-                                                                                                                                                                                            #message { font-size: 12px; line-height: 1.35; min-height: 32px; margin: 2px 0 6px; }
-                                                                                                                                                                                              #end-day { padding: 9px; }
-                                                                                                                                                                                                #joy { width: 104px; height: 104px; }
-                                                                                                                                                                                                  #interact { width: 96px; height: 62px; font-size: 12px; }
-                                                                                                                                                                                                    #banner { font-size: 14px; top: 54px; }
-                                                                                                                                                                                                      #overlay-box { max-height: 85vh; overflow-y: auto; }
-                                                                                                                                                                                                      }
-
-                                                                                                                                                                                                      @media (max-width: 900px) and (orientation: landscape) {
-                                                                                                                                                                                                        main { flex-direction: row; }
-                                                                                                                                                                                                          #dashboard { width: 260px; max-height: none; height: 100%; flex: none; }
-                                                                                                                                                                                                            #meters { grid-template-columns: 1fr; }
-                                                                                                                                                                                                            }
-
-                                                                                                                                                                                                            #ov-buttons.row-buttons { display: flex; gap: 8px; }
-                                                                                                                                                                                                            #ov-buttons.row-buttons button { flex: 1; text-align: center; }
-
-                                                                                                                                                                                                            #title-screen {
-                                                                                                                                                                                                              position: fixed; inset: 0; z-index: 30; overflow-y: auto;
-                                                                                                                                                                                                                display: flex; align-items: center; justify-content: center;
-                                                                                                                                                                                                                  background: radial-gradient(ellipse at 50% 100%, #1b2a55 0%, #0b1026 60%, #05070f 100%);
-                                                                                                                                                                                                                    transition: opacity 0.6s;
-                                                                                                                                                                                                                    }
-                                                                                                                                                                                                                    #title-screen.hide { opacity: 0; pointer-events: none; }
-                                                                                                                                                                                                                    #stars { position: absolute; inset: 0; width: 100%; height: 100%; }
-                                                                                                                                                                                                                    #moon {
-                                                                                                                                                                                                                      position: absolute; bottom: -230px; left: 50%; width: 520px; height: 520px; margin-left: -260px;
-                                                                                                                                                                                                                        border-radius: 50%;
-                                                                                                                                                                                                                          background: radial-gradient(circle at 35% 30%, #e6e8f0, #9aa0b5 55%, #5c6279);
-                                                                                                                                                                                                                            box-shadow: 0 0 80px rgba(150, 180, 255, 0.25);
-                                                                                                                                                                                                                              animation: moonfloat 8s ease-in-out infinite;
-                                                                                                                                                                                                                              }
-                                                                                                                                                                                                                              #moon::before, #moon::after { content: ""; position: absolute; border-radius: 50%; background: rgba(0, 0, 0, 0.12); box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2); }
-                                                                                                                                                                                                                              #moon::before { left: 20%; top: 14%; width: 90px; height: 90px; }
-                                                                                                                                                                                                                              #moon::after { right: 22%; top: 30%; width: 56px; height: 56px; }
-                                                                                                                                                                                                                              @keyframes moonfloat { 50% { transform: translateY(-14px); } }
-
-                                                                                                                                                                                                                              #title-sound { position: absolute; top: 10px; right: 10px; z-index: 3; padding: 6px 10px; font-size: 12px; background: rgba(193, 122, 89, 0.9); }
-                                                                                                                                                                                                                              #title-content {
-                                                                                                                                                                                                                                position: relative; z-index: 2; width: 100%; max-width: 460px; margin: auto;
-                                                                                                                                                                                                                                  padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px;
-                                                                                                                                                                                                                                  }
-                                                                                                                                                                                                                                  #title-astro { width: 72px; height: 96px; image-rendering: pixelated; animation: floaty 3s ease-in-out infinite; }
-                                                                                                                                                                                                                                  @keyframes floaty { 50% { transform: translateY(-12px) rotate(4deg); } }
-                                                                                                                                                                                                                                  #logo { margin: 2px 0; font-size: 42px; letter-spacing: 5px; line-height: 1.1; text-shadow: 0 0 18px #4aa3ff; animation: glow 2.5s ease-in-out infinite alternate; }
-                                                                                                                                                                                                                                  #logo .w { display: block; }
-                                                                                                                                                                                                                                  #logo .l { display: inline-block; opacity: 0; animation: drop 0.6s ease-out forwards; }
-                                                                                                                                                                                                                                  @keyframes drop { from { opacity: 0; transform: translateY(-40px) scale(1.5); } to { opacity: 1; transform: none; } }
-                                                                                                                                                                                                                                  @keyframes glow { from { text-shadow: 0 0 8px #4aa3ff; } to { text-shadow: 0 0 26px #7cc4ff, 0 0 6px #fff; } }
-                                                                                                                                                                                                                                  #tagline { margin: 0 0 6px; color: #9bbbd3; letter-spacing: 2px; animation: fadein 1.5s 1.2s both; }
-                                                                                                                                                                                                                                  #title-diff { width: 100%; animation: fadein 1.5s 1.5s both; }
-                                                                                                                                                                                                                                  #title-diff p { margin: 4px 0; }
-                                                                                                                                                                                                                                  @keyframes fadein { from { opacity: 0; } to { opacity: 1; } }
-                                                                                                                                                                                                                                  #play-btn { font-size: 22px; padding: 12px 52px; border-radius: 30px; background: #f3a63a; color: #101827; animation: fadein 1s 2s both, beat 1.6s 3s infinite; }
-                                                                                                                                                                                                                                  @keyframes beat { 50% { transform: scale(1.06); } }
-                                                                                                                                                                                                                                  #continue-btn { display: none; padding: 10px 40px; border-radius: 30px; background: #36a9a0; }
-                                                                                                                                                                                                                                  #continue-btn.show { display: block; }
-                                                                                                                                                                                                                                  #howto-btn { background: transparent; border: 2px solid #557c96; padding: 8px 20px; }
-
-                                                                                                                                                                                                                                  #launch {
-                                                                                                                                                                                                                                    position: fixed; inset: 0; z-index: 35; display: none;
-                                                                                                                                                                                                                                      flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-                                                                                                                                                                                                                                        background: #05070f; text-align: center; padding: 20px;
-                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                        #launch.show { display: flex; }
-                                                                                                                                                                                                                                        #launch-text { margin: 0; color: #9bbbd3; letter-spacing: 2px; }
-                                                                                                                                                                                                                                        #launch-num { font-size: 72px; font-weight: bold; min-height: 90px; color: #ffd77a; }
-                                                                                                                                                                                                                                        #launch-num.pop { animation: pop 0.8s ease-out; }
-                                                                                                                                                                                                                                        @keyframes pop { from { transform: scale(2.2); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-                                                                                                                                                                                                                                        #launch-tip { margin: 0; max-width: 360px; color: #cfe3f1; font-size: 14px; }
-
-                                                                                                                                                                                                                                        @media (max-width: 900px) {
-                                                                                                                                                                                                                                          #logo { font-size: 32px; letter-spacing: 3px; }
-                                                                                                                                                                                                                                            #moon { width: 380px; height: 380px; margin-left: -190px; bottom: -190px; }
-                                                                                                                                                                                                                                            }
+                                                                                                                                                                                    @media (max-width: 900px) and (orientation: landscape) {
+                                                                                                                                                                                      main { flex-direction: row; }
+                                                                                                                                                                                        #dashboard { width: 260px; max-height: none; height: 100%; flex: none; }
+                                                                                                                                                                                          #meters { grid-template-columns: 1fr; }
+                                                                                                                                                                                          }
