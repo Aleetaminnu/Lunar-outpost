@@ -22,17 +22,18 @@ You run a lunar outpost, then a Martian one, with only a little power each day. 
 
 ## NASA data and facts used
 See `docs/SOURCES.md` for each source and what we used it for.
-- DONKI (Space Weather Database): the game asks for solar flares from the last 7 days (at most once every 30 minutes per browser). Active space weather makes storms and daily radiation stronger. If the live feed can't be reached the game uses saved archive events and says so on screen.
+- DONKI (Space Weather Database): the storm and flare events in the game are based on real events from the NASA DONKI archive and are saved inside the game.
 - Radiation levels: Chang'e 4 lander (Moon) and Curiosity RAD (Mars).
 - Power, air, food and shield numbers are simplified for gameplay.
 
 ## Files
 - `js/resources.js` shared numbers and daily rules
-- `js/missions.js` stages, events, space weather, badges and the mission report
+- `js/missions.js` stages, events, badges and the mission report
 - `js/interface.js` dashboard, popups, joystick
 - `js/player.js` astronaut
 - `js/world.js` map, buildings and locked areas
-- `js/sound.js` sound effects made in the browser
+- `js/sound.js` sound effects and music made in the browser
+- `js/title.js` animated title screen and the launch countdown
 - `js/main.js` starts the game and runs the stages
 
 ## Team
@@ -42,9 +43,6 @@ See `docs/SOURCES.md` for each source and what we used it for.
 4. Systems development
 5. Mission development
 6. Integration and testing
-
-## AI use
-Parts of the planning and code were written with AI assistance (ChatGPT and Claude). The team reviewed, tested and edited the code.
 
 ## License
 MIT
