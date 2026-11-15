@@ -1,48 +1,39 @@
-# Junior Astronaut: Outpost Zero
+# Outpost Zero: Junior Astronaut Mission Trainer
 
-A 2D top-down game for the NASA Space Apps Challenge "Build a Junior Astronaut Mission Trainer" (ages 7-12). Built with Phaser 3 and plain JavaScript. Runs in any browser, no download or account.
+A 2D top-down game for the NASA Space Apps Challenge "Build a Junior Astronaut Mission Trainer" (ages 7-12). Built with Phaser 3 and plain JavaScript. It runs in any browser on a phone or computer, with no download or account.
 
 Play it: https://aleetaminnu.github.io/junior-astronaut-outpost-zero/
 
 ## The idea
-You run a lunar outpost, then a Martian one, with only a little power each day. Every building costs power, so keeping the crew alive always competes with doing science. There is no free choice.
+You run a small lunar outpost for 7 days. Each day you only get 10 power, and every building uses some of it. Keeping the crew alive and collecting science both come out of the same power, so there is no free choice.
 
 ## How to play
-- Move with the joystick, arrow keys or WASD. Or tap a building and the astronaut walks there.
-- Next to a building, press USE (E or Space on a keyboard).
-- Press END DAY when you are done. Overnight air, food and shield drop and radiation hurts the crew.
-- Finish four stages: Landing Camp, Base Camp, Science Outpost (Moon) and Mars Outpost. Each opens a new part of the base.
-- The MAP button (or M) shows the whole base. Difficulty (Easy, Normal, Hard), sound and bigger text are on the start screen and top bar.
+- Walk with the arrow keys, WASD or the on-screen buttons.
+- Stand next to a building and press E, Space or INTERACT.
+- Press END DAY when you are done. If you still have 2 or more power left, the game asks first.
+- Survive 7 days and collect 50 science points.
 
-## What it teaches
-- Power is limited, so life support, shielding, food and science trade off against each other.
-- Radiation: the Moon's surface has about twice the radiation of Mars' surface. A strong shield matters more on the Moon.
-- Space weather: solar flares and storms hit harder when your shield is weak.
-- Communication delay: on the Moon a call to Earth takes about 3 seconds there and back. On Mars it takes 8 to 48 minutes, so Earth's answer arrives tomorrow and the crew has to decide alone.
+## Buildings
+- Habitat: +15 air (2 power)
+- Greenhouse: +14 food (2 power)
+- Supply Depot: +16 radiation shield (2 power)
+- Science Lab: +10 science (3 power)
+- Power Array: shows the power forecast (free)
 
-## NASA data and facts used
-See `docs/SOURCES.md` for each source and what we used it for.
-- DONKI (Space Weather Database): the storm and flare events in the game are based on real events from the NASA DONKI archive and are saved inside the game.
-- Radiation levels: Chang'e 4 lander (Moon) and Curiosity RAD (Mars).
-- Power, air, food and shield numbers are simplified for gameplay.
+Overnight air, food and shield drop, and radiation hurts the crew more when the shield is low. Random events (a solar flare, a radio blackout, lunar night and more) ask for a choice, and every choice costs something.
+
+## NASA data and facts
+See `docs/SOURCES.md`. The storm events are based on real events from the NASA DONKI archive and are saved inside the game. Radiation on the Moon is based on Chang'e 4 lander measurements. Power, air and food numbers are simplified for gameplay.
 
 ## Files
-- `js/resources.js` shared numbers and daily rules
-- `js/missions.js` stages, events, badges and the mission report
-- `js/interface.js` dashboard, popups, joystick
-- `js/player.js` astronaut
-- `js/world.js` map, buildings and locked areas
-- `js/sound.js` sound effects and music made in the browser
-- `js/title.js` animated title screen and the launch countdown
-- `js/main.js` starts the game and runs the stages
-
-## Team
-1. Player development
-2. World development
-3. Interface development
-4. Systems development
-5. Mission development
-6. Integration and testing
+- `js/resources.js` the numbers and daily rules
+- `js/missions.js` events, facts and day reports
+- `js/interface.js` dashboard, popups and on-screen buttons
+- `js/sound.js` sound effects made in the browser
+- `js/player.js` the astronaut
+- `js/world.js` the map and the buildings
+- `js/main.js` starts the game
+- `assets/logo.png`, `assets/icon.png` logo and icon
 
 ## License
 MIT
